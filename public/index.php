@@ -32,8 +32,12 @@
 
         <div id="app-2">
             <button v-on:click="increase(2, $event)">Click Me</button>
-            <p>{{ counter }}</p>
-            <p v-on:mousemove="updateCoordinates">Coordinates {{ x }} / {{ y }}</p>
+            <button v-on:click="counter++">Click Me</button>
+            <p>{{ counter * 2 }}</p>
+            <p v-on:mousemove="updateCoordinates">
+                Coordinates {{ x }} / {{ y }} - <span v-on:mousemove.stop="">DEAD SPOT</span>
+            </p>
+            <input type="text" v-on:keyup.enter.space="alertMe">
         </div>
 
         <script>
@@ -52,6 +56,51 @@
                         this.x = event.clientX;
                         this.y = event.clientY;
                     },
+                    alertMe: function () {
+                        alert('me!');
+                    },
+                }
+            })
+        </script>
+
+        <div style='margin-top:20px;' id='app-3'>
+            <input type="text" v-model="name">
+            <p>{{ name }}</p>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app-3',
+                data: {
+                    name:'Andy',
+                },
+                methods: {
+
+                }
+            })
+        </script>
+
+        <div style='margin-top:20px;' id='app-4'>
+            <button v-on:click="increase">Increase</button>
+            <p>Counter: {{ counter }}</p>
+            <p>Result: {{ result }}</p>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app-4',
+                data: {
+                    counter: 0,
+                    result: '',
+                },
+                methods: {
+                    increase: function () {
+                        this.counter++;
+                        this.result = this.counter > 5 ? 'Greater than 5' : 'Smaller 5';
+                    },
+                    decrease: function () {
+
+                    }
                 }
             })
         </script>
