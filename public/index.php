@@ -9,9 +9,10 @@
     <body>
         <div id="app">
             <h1 v-once>{{ title }}</h1> <!-- v-once - рендерит елемент 1 раз -->
-            <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>
+            <p>{{ sayHello() }} - <a :href="link">Google</a></p> <!-- : - сокращенное обозначение v-bind -->
             <p v-html="finishedLink"></p> <!-- v-html - рендерит строку как html -->
         </div>
+        <hr>
 
         <script>
             new Vue({
@@ -39,6 +40,7 @@
             </p>
             <input type="text" v-on:keyup.enter.space="alertMe">
         </div>
+        <hr>
 
         <script>
             new Vue({
@@ -81,28 +83,153 @@
         </script>
 
         <div style='margin-top:20px;' id='app-4'>
-            <button v-on:click="increase">Increase</button>
-            <p>Counter: {{ counter }}</p>
-            <p>Result: {{ result }}</p>
+            <button v-on:click="counter++">Increase</button>
+            <button v-on:click="counter--">Decrease</button>
+            <button @click="secondCounter++">Increase Second</button> <!-- @ - сокращенное обозначение v-on -->
+            <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+            <p>Result: {{ result() }} | {{ output }}</p>
+        </div>
+        <hr>
+
+        <script>
+            let asdf = new Vue({
+                el: '#app-4',
+                data: {
+                    counter: 0,
+                    secondCounter: 0,
+                },
+                computed: { // пересчитывается когда одна из зависимостей изменена. проперти. Указывает как обработать изменение этой проперти
+                    output: function () {
+                        console.log('Computed');
+                        return this.counter > 5 ? 'Greater than  5' : 'Smaller than 5';
+                    }
+                },
+                watch: { // работает, когда проперти изменено. Указывает что еще сделать, когда проперти изменена
+                    counter: function (value) {
+                        let vm = this; // для колбэчных функций this (vue) нужно ложить в переменную и передавать, this (vue) не доступен в контексте колбэка
+
+                        setTimeout(function () {
+                            vm.counter = 0;
+                        }, 2000);
+                    }
+                },
+                methods: { // пересчитывается всегда, когда пересчитывается дом
+                    result: function () {
+                        console.log('Method');
+                        return this.counter > 5 ? 'Greater than  5' : 'Smaller than 5';
+                    },
+                }
+            })
+        </script>
+
+        <div style='margin-top:20px;' id="app-5">
+            <div
+                class="demo"
+                @click="attachRed = !attachRed"
+                :class="{red: attachRed}"
+                ></div>
+            
+            <div
+                class="demo"
+                :class="divClasses"
+                ></div>
+            
+            <div class="demo" :class="[color, {red: attachRed}]"></div> <!-- {red: attachRed} доп класс, если первый - null -->
+            <input type="text" v-model="color">
+        </div>
+        <hr>
+
+        <script>
+            new Vue({
+                el: '#app-5',
+                data: {
+                    attachRed: false,
+                    color: 'green',
+                },
+                computed: {
+                    divClasses: function () {
+                        return {
+                            red: this.attachRed,
+                            blue: (!this.attachRed),
+                        };
+                    },
+                },
+            })
+        </script>
+
+        <style>
+            .demo {
+                width: 50px;
+                height:50px;
+                background-color:silver;
+                margin-bottom:5px;
+            }
+
+            .red {
+                background-color: red;
+            }
+
+            .green {
+                background-color: green;
+            }
+
+            .blue {
+                background-color: blue;
+            }
+        </style>
+
+        <div style='margin-top:20px;' id="app-6">
+            <div class="demo" :style="{backgroundColor: color}"></div> <!-- не использовать  -  не читается  -->
+            <div class="demo" :style="myStyle"></div>
+            <div class="demo" :style="[myStyle, {height: width + 'px'}]"></div>
+            <input type="text" v-model="color">
+            <input type="text" v-model="width">
+        </div>
+        <hr>
+
+        <script>
+            new Vue({
+                el: '#app-6',
+                data: {
+                    color: 'gray',
+                    width: 50,
+                },
+                computed: {
+                    myStyle: function () {
+                        return {
+                            backgroundColor: this.color,
+                            width: this.width + 'px',
+                        };
+                    }
+                },
+            })
+        </script>
+
+        <div style='margin-top:20px;' id='app-7'>
+            <p v-if="show">You can see me!</p>
+            
+            <template v-if="show">
+                <h1>Heading</h1>
+                <p>Inside a template</p>
+            </template>
+
+            <p v-show="show">Do you also see me?</p> <!-- v-show - устанавливает display:none | v-if - удалеяет, но сотавляет коммент -->
+
+            <button @click="show = !show">Switch</button> 
         </div>
 
         <script>
             new Vue({
-                el: '#app-4',
+                el: '#app-7',
                 data: {
-                    counter: 0,
-                    result: '',
+                    show: true,
                 },
-                methods: {
-                    increase: function () {
-                        this.counter++;
-                        this.result = this.counter > 5 ? 'Greater than 5' : 'Smaller 5';
-                    },
-                    decrease: function () {
-
-                    }
-                }
             })
         </script>
+
+        <div>
+            
+        </div>
+
     </body>
 </html>
