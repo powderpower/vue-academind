@@ -217,6 +217,7 @@
 
             <button @click="show = !show">Switch</button> 
         </div>
+        <hr>
 
         <script>
             new Vue({
@@ -227,9 +228,40 @@
             })
         </script>
 
-        <div>
+        <div id='app-8'>
             
+            <ul>
+                <li v-for="(ingredient, i) in ingredients">{{ ingredient }} ({{ i }})</li>
+            </ul>
+            <button @click="ingredients.push('spices')">Add New</button>
+
+            <template v-for="(ingredient, index) in ingredients">
+                <h1>{{ ingredient }}</h1>
+                <p>{{ index }}</p>
+            </template>
+
+            <ul>
+                <li v-for="person in persons">
+                    <div v-for="(value, key, index) in person">{{ key }}: {{ value }} ({{ index }})</div>
+                </li>
+            </ul>
+
+            <span v-for="n in 10">{{ n }}</span>
+
         </div>
+
+        <script>
+            new Vue({
+                el: '#app-8',
+                data: {
+                    ingredients: ['meat', 'fruit', 'cookies'],
+                    persons: [
+                        {name: 'Max', age:27, color:'red'},
+                        {name: 'Anna', age:'unknown', color:'blue'},
+                    ],
+                },
+            })
+        </script>
 
     </body>
 </html>
