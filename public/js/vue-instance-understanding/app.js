@@ -147,13 +147,13 @@ const vmFour = new Vue({
   */
 //let dataTwo = {status: 'critical'};
 
+/* Глобальный компонент
 Vue.component('my-cmp', {
   data: function () {
     //return dataTwo;
 
-    /**
-     * Так проперти будут меняться конкренто для каждого instance
-     */
+    
+    // Так проперти будут меняться конкренто для каждого instance
     return {
       status: 'critical',
     };
@@ -165,7 +165,32 @@ Vue.component('my-cmp', {
     }
   }
 });
+*/
+
+/**
+ * Использование компонента локально для инстанс
+ */
+const cmp = {
+  data: function () {
+    return {
+      status: 'critical',
+    };
+  },
+  template: '<p>Server status: {{ status }} (<button @click="changeStatus">Change status</button>)</p>',
+  methods: {
+    changeStatus: function () {
+      this.status = 'normal';
+    }
+  }
+};
 
 const vmFive = new Vue({
   el: '#app-5',
+  components: {
+    'my-cmp': cmp,
+  },
+});
+
+const vmSix = new Vue({
+  el: '#app-6',
 })
