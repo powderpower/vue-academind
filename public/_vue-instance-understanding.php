@@ -25,4 +25,11 @@
     <button @click="destroy">Destroy</button>
 </div>
 
+<hr>
+
+<div id='app-5'>
+    <my-cmp></my-cmp>
+    <my-cmp></my-cmp>
+</div>
+
 <script src="js/vue-instance-understanding/app.js"></script>

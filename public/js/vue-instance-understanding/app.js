@@ -135,3 +135,37 @@ const vmFour = new Vue({
  * updated не произойдет, если проперти не имеет реальных изменений.
  * при вызове $destro(), виртуальный дом больше не существует и не контролирует дом.
  */
+
+
+/**
+ * Использование компонента в нескольких местах.
+ */
+
+ /**
+  * Если таки способом присваивать дату, то при смене проперти,
+  * значение меняется в обоих инстансах компонента.
+  */
+//let dataTwo = {status: 'critical'};
+
+Vue.component('my-cmp', {
+  data: function () {
+    //return dataTwo;
+
+    /**
+     * Так проперти будут меняться конкренто для каждого instance
+     */
+    return {
+      status: 'critical',
+    };
+  },
+  template: '<p>Server status: {{ status }} (<button @click="changeStatus">Change status</button>)</p>',
+  methods: {
+    changeStatus: function () {
+      this.status = 'normal';
+    }
+  }
+});
+
+const vmFive = new Vue({
+  el: '#app-5',
+})
