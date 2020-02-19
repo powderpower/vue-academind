@@ -1,6 +1,23 @@
 <template>
     <div>
+        <!--
+            в случае разделения по именам общий
+            слот выводятся прочие неименованные аттрибуты
+        -->
         <slot></slot>
+        <div class='title'>
+            <slot name="title"></slot>
+            <span style="color: gray">
+                <!--
+                    внутри слота указываются дефолтные данные,
+                    есил значения слота не указаны в родителе
+                -->
+                <slot name="subtitle">The Subtitle</slot>
+            </span>
+        </div>
+        <div>
+            <slot name="content"></slot>
+        </div>
     </div>
 </template>
 
@@ -22,5 +39,9 @@ export default {
 
     h2 {
         color:red;
+    }
+
+    .title {
+        font-style: italic;
     }
 </style>
