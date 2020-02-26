@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- для локального испозования data
         <div
             id="on"
             @click="isOn = true"
@@ -8,16 +9,34 @@
             id="off"
             @click="isOn = false"
             :class="{active: !isOn}">Off</div>
+        -->
+        <!-- к родительскому, через emit -->
+        <div
+            id="on"
+            @click="switched(true)"
+            :class="{active: value}">On</div>
+        <div
+            id="off"
+            @click="switched(false)"
+            :class="{active: (! value)}">Off</div>
     </div>
 </template>
 
 <script>
     export default {
+        /* переводим на родителя через emit
         data: function () {
             return {
-                isOn: true
+                isOn: true,
             };
         }
+        */
+       props: ['value'],
+       methods: {
+           switched: function (isOn) {
+               this.$emit('input', isOn);
+           },
+       },
     }
 </script>
 
