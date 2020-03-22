@@ -3,9 +3,33 @@
         <p>Please select a User</p>
         <hr>
         <ul class="list-group">
-            <li class="list-group-item" style="cursor: pointer">User 1</li>
-            <li class="list-group-item" style="cursor: pointer">User 2</li>
-            <li class="list-group-item" style="cursor: pointer">User 3</li>
+            <router-link
+                v-for="(user, i) in users"
+                :key="i"
+                tag="li"
+                :to="getUserDetailRoute(user)"
+                class="list-group-item"
+                style="cursor: pointer"
+            >
+                User {{ user }}
+            </router-link>
         </ul>
     </div>
 </template>
+
+<script>
+    import { mapGetters } from 'vuex';
+    
+    export default {
+        data: () => {
+            return {
+                users: [1, 2, 3],
+            };
+        },
+        computed: {
+            ...mapGetters({
+                getUserDetailRoute: 'getUserDetailRoute',
+            }),
+        },
+    }
+</script>
