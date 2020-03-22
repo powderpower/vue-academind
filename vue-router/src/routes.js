@@ -1,35 +1,33 @@
 import Home from './components/Home';
 import Header from './components/Header';
 
-const USER_COMPONENT_PATH           = './components/user/User';
-const USER_START_COMPONENT_PATH     = './components/user/UserStart';
-const USER_DETAIL_COMPONENT_PATH    = './components/user/UserDetail';
-const USER_EDIT_COMPONENT_PATH      = './components/user/UserEdit';
-
 /** подзагрузка компонентов через вебпак */
+/** старая версия использования - новая через import */
 const User = (resolve) => {
-    require.ensure([USER_COMPONENT_PATH], () => {
-        resolve(require(USER_COMPONENT_PATH));
-    });
+    require.ensure(['@user-components/User'], (require) => {
+        resolve(require('@user-components/User'));
+    }, 'user');
+    // 'user' - аргумент, который сгруппирует бандлы в которых он указан в 1 бандл
 };
 
 const UserStart = (resolve) => {
-    require.ensure([USER_START_COMPONENT_PATH], () => {
-        resolve(require(USER_START_COMPONENT_PATH));
+    require.ensure(['@user-components/UserStart'], (require) => {
+        resolve(require('@user-components/UserStart'));
     });
 };
 
 const UserDetail = (resolve) => {
-    require.ensure([USER_DETAIL_COMPONENT_PATH], () => {
-        resolve(require(USER_DETAIL_COMPONENT_PATH));
+    require.ensure(['@user-components/UserDetail'], (require) => {
+        resolve(require('@user-components/UserDetail'));
     });
 };
 
 const UserEdit = (resolve) => {
-    require.ensure([USER_EDIT_COMPONENT_PATH], () => {
-        resolve(require(USER_EDIT_COMPONENT_PATH));
+    require.ensure(['@user-components/UserEdit'], (require) => {
+        resolve(require('@user-components/UserEdit'));
     });
 };
+/** ===== */
 
 const ROUTE_HOME = 'home';
 const ROUTE_USERS = 'users';
